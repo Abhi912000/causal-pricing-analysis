@@ -1,80 +1,135 @@
 # Causal Inference & Synthetic Control for Algorithmic Pricing
 
-A beginner-friendly, runnable implementation of Project 1 from the supplied Zaalima Development project brief. It demonstrates:
-- simulated regional-market revenue data and competitor/demand covariates;
-- a treated market and intervention date;
-- synthetic control with non-negative donor weights summing to one;
-- pre-intervention mean squared prediction error (MSPE);
-- a cross-fitted Double Machine Learning (DML) estimate;
-- a Streamlit dashboard with actual-vs-counterfactual charts and CSV downloads.
+## Project Overview
 
-**Important:** This is an educational prototype using generated data. It does not prove a real pricing effect. A production-grade causal study needs validated data, a defensible causal graph, treatment-assignment assumptions, placebo/sensitivity checks, and careful uncertainty estimates.
+This project focuses on applying Causal Inference and Synthetic Control techniques to analyze the impact of algorithmic pricing strategies.
 
-## 1. Requirements
-- Windows 10/11
-- Python 3.10–3.12 recommended
-- Visual Studio Code with the Python extension
+The project aims to estimate the effect of pricing interventions using observational data and compare outcomes between treated and control groups.
 
-## 2. Open in VS Code
-Extract the ZIP, then in VS Code choose **File → Open Folder** and select `causal_pricing_project`.
+It provides a Python-based application for generating or analyzing data and examining estimated treatment effects.
 
-Open **Terminal → New Terminal**.
+## Objectives
 
-## 3. Create a virtual environment (Windows PowerShell)
+- Understand the impact of algorithmic pricing strategies.
+- Apply causal inference techniques to observational data.
+- Implement the Synthetic Control methodology.
+- Estimate treatment effects.
+- Analyze and interpret the results through Python.
+
+## Technologies Used
+
+- **Python** – Main programming language
+- **Pandas** – Data manipulation and analysis
+- **NumPy** – Numerical computations
+- **Streamlit** – Interactive web application
+- **SQL** – Data querying (where applicable)
+- **Git & GitHub** – Version control and project management
+
+## Project Structure
+
+```text
+causal_pricing_project/
+│
+├── app.py
+├── causal_engine.py
+├── run_analysis.py
+├── requirements.txt
+├── README.md
+├── run_project.bat
+└── .gitignore
+
+data/
+└── market_transactions.csv
+```
+
+## Installation and Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Abhi912000/causal-pricing-analysis.git
+```
+
+### 2. Navigate to the Project Folder
+
+```bash
+cd causal-pricing-analysis/causal_pricing_project
+```
+
+### 3. Create a Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+### 4. Activate the Virtual Environment
+
+For Windows PowerShell:
+
 ```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
+.venv\Scripts\Activate.ps1
+```
+
+### 5. Install Dependencies
+
+```bash
 pip install -r requirements.txt
 ```
-If PowerShell blocks activation, use Command Prompt:
-```bat
-.venv\Scripts\activate.bat
+
+## Running the Project
+
+### Run the Streamlit Application
+
+```bash
+streamlit run app.py
 ```
-If `py` is not recognized, install Python from python.org and tick **Add Python to PATH**.
 
-## 4. Run the app
-```powershell
-python -m streamlit run app.py
+The application should open in your browser. If it does not, open:
+
+http://localhost:8501
+
+### Run the Analysis Script
+
+```bash
+python run_analysis.py
 ```
-Streamlit will print a local URL, usually `http://localhost:8501`. Open it in your browser. Set experiment settings in the sidebar and click **Generate data and run analysis**.
 
-## 5. What you should see
-- KPI values for synthetic-control average lift, cumulative lift, pre-period MSPE, and DML estimate.
-- A line chart comparing treated-market revenue with the synthetic counterfactual.
-- A weekly effect table and a plain-language summary.
-- Download buttons for the generated panel data and the synthetic-control results.
-- The generated dataset is also saved as `data/market_transactions.csv`.
+## Main Project Components
 
-## 6. How the data is structured
-Each row is one market-week:
-- `market`, `week`: market identifier and time index
-- `revenue`: outcome
-- `demand_index`, `competitor_price`, `promo_spend`: covariates
-- `treated_market`: 1 for the selected treated market
-- `post`: 1 from the intervention week onward
-- `treatment`: `treated_market × post`
+### 1. Application Interface
 
-## 7. How the analysis works
-1. **Generate panel data.** Market baselines, trends, seasonality, demand, competitor price, promotions, and noise create varied revenue trajectories.
-2. **Synthetic control.** Optimize donor-market weights using only pre-intervention outcomes. The weights are constrained to be between 0 and 1 and sum to 1.
-3. **Counterfactual.** Apply the learned weights to donor markets across all weeks to estimate what the treated market might have done without the intervention.
-4. **Effect.** Actual revenue minus synthetic revenue is the estimated weekly gap. Average and cumulative post-period gaps are reported.
-5. **MSPE.** Mean squared prediction error in the pre-period measures how closely the synthetic market matches the treated market before intervention.
-6. **DML.** Cross-fitting predicts outcome and treatment using random forests, residualizes both, and estimates a residualized treatment coefficient.
+`app.py` provides the interactive application interface.
 
-## 8. Important limitations
-- The data is simulated and deliberately includes a known treatment effect.
-- The DML estimator is a compact teaching implementation; its confidence interval is approximate, and treatment is rare in this panel. For formal inference, use a validated implementation such as EconML or DoubleML and a design appropriate to panel data.
-- Synthetic control relies on a good pre-treatment match and assumptions that donor markets are not affected by the intervention.
-- In a real project, add a causal DAG, placebo interventions, donor-pool sensitivity, pre-trend diagnostics, and robustness checks before making pricing decisions.
-- Do not interpret the demo's generated result as an actual business finding.
+### 2. Causal Engine
 
-## 9. GitHub daily commits
-The supplied project brief asks teams to create a GitHub repository and commit work daily. Example:
-```powershell
-git init
-git add .
-git commit -m "Initial causal pricing analytics project"
-```
-Then create a repository on GitHub and follow GitHub's instructions to add the remote and push. Never commit credentials or private customer data.
+`causal_engine.py` contains the causal analysis implementation.
+
+### 3. Analysis Script
+
+`run_analysis.py` is used to execute the analysis independently.
+
+### 4. Dataset
+
+`market_transactions.csv` contains the market transaction data used by the project.
+
+## Expected Learning Outcomes
+
+- Understanding causal inference concepts.
+- Practical implementation of synthetic control methods.
+- Working with Python data analysis libraries.
+- Analyzing treatment effects using observational data.
+- Building an interactive data analytics application.
+
+## Limitations
+
+The results depend on the quality of the input data and the assumptions of the causal inference methodology.
+
+Estimated effects should be interpreted carefully, particularly when using simulated observational data.
+
+## Author
+
+**Ganapathi Sai Abhishek Grandhe**
+
+## Project Category
+
+Data Analytics | Causal Inference | Algorithmic Pricing | Python
